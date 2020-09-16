@@ -1,0 +1,19 @@
+.navbar {
+	height: 50px;
+	width: 100%;
+	background: #f8f8ff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	z-index: 100;
+}
+
+.navbar a {
+	text-decoration: none;
+	color: #cc1818;
+}
