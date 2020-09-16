@@ -37,7 +37,7 @@ const Category = (props) => {
 				data
 			).then((res) => {
 				setMsg("Item is added to the cart.");
-				props.SET_CART();
+				props.ADD_TO_CART(data);
 			});
 		} else {
 			setMsg("Item is already in the cart.");
@@ -123,6 +123,7 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
 	return {
+		ADD_TO_CART: (data) => dispatch(Actions.ADD_TO_CART(data)),
 		SET_CART: () => dispatch(Actions.SET_CART()),
 	};
 };

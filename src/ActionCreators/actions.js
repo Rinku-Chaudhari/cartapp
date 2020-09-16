@@ -1,5 +1,23 @@
 import Axios from "axios";
 
+export const DECREASE_QUANTITY = (id) => {
+	return (dispatch) => {
+		dispatch({ type: "INCREASE_ITEM_QUANTITY", payload: id });
+	};
+};
+
+export const INCREASE_QUANTITY = (id) => {
+	return (dispatch) => {
+		dispatch({ type: "INCREASE_ITEM_QUANTITY", payload: id });
+	};
+};
+
+export const ADD_TO_CART = (data) => {
+	return (dispatch) => {
+		dispatch({ type: "ADD_TO_CART", payload: data });
+	};
+};
+
 export const REMOVE_FROM_CART = (key) => {
 	return (dispatch) => {
 		dispatch({ type: "REMOVE_FROM_CART", payload: key });

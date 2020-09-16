@@ -10,7 +10,13 @@ import ClearIcon from "@material-ui/icons/Clear";
 import Axios from "axios";
 import { Transition } from "react-transition-group";
 
-const Cart = ({ cartItems, SET_CART, REMOVE_FROM_CART, cartLoaded }) => {
+const Cart = ({
+	cartItems,
+	SET_CART,
+	REMOVE_FROM_CART,
+	cartLoaded,
+	INCREASE_QUANTITY,
+}) => {
 	const [totalPrice, setTotalprice] = useState(0);
 	const [run, setRun] = useState(false);
 
@@ -81,7 +87,11 @@ const Cart = ({ cartItems, SET_CART, REMOVE_FROM_CART, cartLoaded }) => {
 				{cartItems.length > 0 ? (
 					cartItems.map((item) => {
 						return (
-							<Transition key={item.id} in={run} timeout={500}>
+							<Transition
+								key={item.itemId}
+								in={run}
+								timeout={500}
+							>
 								{(state) => (
 									<div className={`cart_item ${state}`}>
 										<div className="left">
@@ -176,6 +186,7 @@ const mapActionsToProps = (dispatch) => {
 	return {
 		SET_CART: () => dispatch(Actions.SET_CART()),
 		REMOVE_FROM_CART: (key) => dispatch(Actions.REMOVE_FROM_CART(key)),
+		INCREASE_QUANTITY: (id) => dispatch(Actions.INCREASE_QUANTITY(id)),
 	};
 };
 
