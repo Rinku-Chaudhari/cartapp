@@ -1,19 +1,43 @@
 .navbar {
-	height: 50px;
-	width: 100%;
-	background: #f8f8ff;
-	position: fixed;
-	top: 0;
-	left: 0;
-	border-bottom: solid 1px rgba(255, 255, 255, 0.5);
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	align-items: center;
-	z-index: 100;
+  height: 50px;
+  width: 100%;
+  background: #f8f8ff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
 }
 
 .navbar a {
-	text-decoration: none;
-	color: #cc1818;
+  text-decoration: none;
+  color: #cc1818;
+}
+
+.navbar form {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: white;
+  padding: 3px 10px;
+}
+
+.navbar form input {
+  border: none;
+  outline: none;
+}
+
+@media (max-width: 350px) {
+  .navbar form {
+    padding: 3px;
+    width: 120px;
+  }
+  .navbar form input {
+    width: 75%;
+  }
 }

@@ -11,121 +11,130 @@ import * as Actions from "../../ActionCreators/actions";
 import ClearIcon from "@material-ui/icons/Clear";
 
 const Category = (props) => {
-	const category = props.match.params.category;
-	const [items, setItems] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [msg, setMsg] = useState("");
+  const category = props.match.params.category;
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [msg, setMsg] = useState("");
+  const [searchString, setSearchString] = useState("");
 
-	const selectedItemId = queryString.parse(props.location.search);
+  const selectedItemId = queryString.parse(props.location.search);
 
-	const AddToCart = (itemId, itemName, itemImage, itemPrice) => {
-		const ITEM_ID = props.cartItems.findIndex((item) => {
-			return item.itemId === itemId;
-		});
+  const filteredItems = items.filter((item) => {
+    return item.itemName.toLowerCase().includes(searchString.toLowerCase());
+  });
 
-		const data = {
-			itemId,
-			itemName,
-			itemImage,
-			itemPrice,
-			itemQuantity: 1,
-		};
+  const AddToCart = (itemId, itemName, itemImage, itemPrice) => {
+    const ITEM_ID = props.cartItems.findIndex((item) => {
+      return item.itemId === itemId;
+    });
 
-		if (ITEM_ID < 0) {
-			Axios.post(
-				`https://ecom111.firebaseio.com/cartItems.json`,
-				data
-			).then((res) => {
-				setMsg("Item is added to the cart.");
-				props.ADD_TO_CART(data);
-			});
-		} else {
-			setMsg("Item is already in the cart.");
-		}
-	};
+    const data = {
+      itemId,
+      itemName,
+      itemImage,
+      itemPrice,
+      itemQuantity: 1,
+    };
 
-	useEffect(() => {
-		Axios.get(
-			`https://rest-api-node-js-s.herokuapp.com/products/${category}`
-		).then((res) => {
-			setItems(res.data.filteredItems);
-			setLoading(false);
-		});
-	}, [category]);
+    if (ITEM_ID < 0) {
+      Axios.post(`https://ecom111.firebaseio.com/cartItems.json`, data).then(
+        (res) => {
+          setMsg("Item is added to the cart.");
+          props.ADD_TO_CART(data);
+        }
+      );
+    } else {
+      setMsg("Item is already in the cart.");
+    }
+  };
 
-	return (
-		<div className="category">
-			<Navbar />
+  useEffect(() => {
+    Axios.get(
+      `https://rest-api-node-js-s.herokuapp.com/products/${category}`
+    ).then((res) => {
+      setItems(res.data.filteredItems);
+      setLoading(false);
+    });
+  }, [category]);
 
-			<div
-				className="msg_div"
-				style={msg === "" ? { display: "none" } : null}
-			>
-				<p>{msg}</p>
-				<button onClick={() => setMsg("")}>
-					<ClearIcon />
-				</button>
-			</div>
+  return (
+    <div className="category">
+      <Navbar
+        searchString={searchString}
+        setSearchString={setSearchString}
+        hideSearchBar={selectedItemId.itemId !== undefined ? true : false}
+      />
 
-			<div
-				className="category_items"
-				style={
-					loading || selectedItemId.itemId !== undefined
-						? { display: "none" }
-						: null
-				}
-			>
-				{items.map((item) => {
-					return (
-						<Item
-							addToCart={AddToCart}
-							key={item.id}
-							id={item.id}
-							name={item.itemName}
-							image={item.itemImage}
-							price={item.itemPrice}
-						/>
-					);
-				})}
-			</div>
+      <div className="msg_div" style={msg === "" ? { display: "none" } : null}>
+        <p>{msg}</p>
+        <button onClick={() => setMsg("")}>
+          <ClearIcon />
+        </button>
+      </div>
 
-			<div
-				className="item_details_view"
-				style={
-					loading || selectedItemId.itemId === undefined
-						? { display: "none" }
-						: null
-				}
-			>
-				<Itemdetails
-					addToCart={AddToCart}
-					item={items?.filter((item) => {
-						return item.id === parseInt(selectedItemId.itemId);
-					})}
-				/>
-			</div>
+      <div
+        className="category_items"
+        style={
+          loading || selectedItemId.itemId !== undefined
+            ? { display: "none" }
+            : null
+        }
+      >
+        {filteredItems.length > 0 ? (
+          filteredItems.map((item) => {
+            return (
+              <Item
+                addToCart={AddToCart}
+                key={item.id}
+                id={item.id}
+                name={item.itemName}
+                image={item.itemImage}
+                price={item.itemPrice}
+              />
+            );
+          })
+        ) : (
+          <p>Nothing found</p>
+        )}
+      </div>
 
-			<div
-				className="loading_view"
-				style={!loading ? { display: "none" } : null}
-			>
-				<p>Loading...</p>
-			</div>
-		</div>
-	);
+      <div
+        className="item_details_view"
+        style={
+          loading || selectedItemId.itemId === undefined
+            ? { display: "none" }
+            : null
+        }
+      >
+        <Itemdetails
+          addToCart={AddToCart}
+          item={items?.filter((item) => {
+            return item.id === parseInt(selectedItemId.itemId);
+          })}
+        />
+      </div>
+
+      <div
+        className="loading_view"
+        style={!loading ? { display: "none" } : null}
+      >
+        <p>Loading...</p>
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
-	return {
-		cartItems: state.initialState.cartItems,
-	};
+  return {
+    cartItems: state.initialState.cartItems,
+  };
 };
 
 const mapActionsToProps = (dispatch) => {
-	return {
-		ADD_TO_CART: (data) => dispatch(Actions.ADD_TO_CART(data)),
-		SET_CART: () => dispatch(Actions.SET_CART()),
-	};
+  return {
+    ADD_TO_CART: (data) => dispatch(Actions.ADD_TO_CART(data)),
+    SET_CART: () => dispatch(Actions.SET_CART()),
+  };
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Category);
