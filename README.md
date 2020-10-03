@@ -1,4 +1,4 @@
-## Simple Cart App using React and Firebase realtime db.
+## Simple Cart App using React,Redux and Firebase realtime db.
 
 ### Live:https://ecom111.web.app
 
