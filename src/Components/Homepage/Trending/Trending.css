@@ -1,0 +1,12 @@
+.trending {
+  width: 85%;
+  margin: auto;
+  margin-bottom: 150px;
+}
+
+.trending .items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

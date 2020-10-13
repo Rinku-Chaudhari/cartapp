@@ -1,0 +1,25 @@
+.footer {
+  height: 250px;
+  width: 100%;
+  background: #f8f8ff;
+  border-top: solid 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer .icons {
+  display: flex;
+  align-items: center;
+}
+
+.footer a {
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+}
+
+.footer a:hover {
+  color: skyblue;
+}

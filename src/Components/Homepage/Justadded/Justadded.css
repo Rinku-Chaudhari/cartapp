@@ -1,0 +1,13 @@
+.just_added {
+  width: 85%;
+  margin: auto;
+  margin-bottom: 150px;
+}
+
+.just_added .items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}

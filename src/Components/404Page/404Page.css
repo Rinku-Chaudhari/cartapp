@@ -1,0 +1,19 @@
+.four_o_four .section {
+	width: 70%;
+	margin: auto;
+	margin-top: 150px;
+	height: 80vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.four_o_four img {
+	transform: scale(0.5);
+	width: 100%;
+}
+
+.four_o_four p {
+	text-align: center;
+}

@@ -1,23 +1,53 @@
-import React from "react";
-import "./App.css";
+import React, { useEffect } from "react";
 
-import Homepage from "./Components/Homepage/Homepage";
-import Category from "./Components/Category/Category";
-import Cart from "./Components/Cart/Cart";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Explore from "./Components/Explore/Explore";
+import Homepage from "./Components/Homepage/Homepage";
+import Itemdetails from "./Components/Itemdetails/Itemdetails";
+import fourOfour from "./Components/404Page/fourOfour";
+import Cartpage from "./Components/Cartpage/Cartpage";
+import { v4 as uuid } from "uuid";
+import { connect } from "react-redux";
+import * as Actions from "./ActionCreators/Actions";
 
-function App(props) {
+const App = ({ SET_CART }) => {
+	useEffect(() => {
+		SET_CART();
+	}, []);
+
+	const uid = localStorage.getItem("uid");
+	uid === null
+		? localStorage.setItem("uid", uuid())
+		: localStorage.setItem("uid", uid);
 	return (
-		<div className="app">
+		<div style={{ fontFamily: "Rubik" }}>
 			<Router>
 				<Switch>
 					<Route path="/" exact component={Homepage} />
-					<Route path="/category/:category" component={Category} />
-					<Route path="/cart" component={Cart} />
+					<Route path="/explore" exact component={Explore} />
+					<Route
+						path="/itemDetails/:id"
+						exact
+						component={Itemdetails}
+					/>
+					<Route path="/cart" exact component={Cartpage} />
+					<Route component={fourOfour} />
 				</Switch>
 			</Router>
 		</div>
 	);
-}
+};
 
-export default App;
+const mapStateToProps = (state) => {
+	return {
+		cartItems: state.initialState.cartItems,
+	};
+};
+
+const mapActionToProps = (dispatch) => {
+	return {
+		SET_CART: () => dispatch(Actions.SET_CART()),
+	};
+};
+
+export default connect(mapStateToProps, mapActionToProps)(App);

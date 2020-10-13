@@ -9,14 +9,12 @@ const reducer = (state = { initialState }, action) => {
       const selectedItem0 = state.initialState.cartItems.findIndex((item) => {
         return (item.itemId = action.payload);
       });
-      console.log(selectedItem0);
       return state;
 
     case "DECREASE_ITEM_QUANTITY":
       const selectedItem1 = state.initialState.cartItems.findIndex((item) => {
         return (item.itemId = action.payload);
       });
-      console.log(selectedItem1);
       return state;
 
     case "ADD_TO_CART":

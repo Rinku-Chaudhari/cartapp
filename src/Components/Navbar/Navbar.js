@@ -1,56 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
 
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import LocalMallIcon from "@material-ui/icons/LocalMall";
-import Badge from "@material-ui/core/Badge";
+import { NavLink } from "react-router-dom";
+import MenuIcon from "@material-ui/icons/Menu";
+import ClearIcon from "@material-ui/icons/Clear";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import * as Actions from "../../ActionCreators/actions";
-import { Search } from "@material-ui/icons";
+import * as Actions from "../../ActionCreators/Actions";
 
-const Navbar = ({
-  location,
-  cartLength,
-  SET_CART,
-  searchString,
-  setSearchString,
-  hideSearchBar,
-}) => {
-  useEffect(() => {
-    SET_CART();
-  }, [SET_CART]);
-
+const Navbar = ({ cartLength }) => {
+  const [view, setView] = useState("desktop");
   return (
     <div className="navbar">
-      <div className="left">
-        <Link to="/">
-          <LocalMallIcon />
-        </Link>
-      </div>
+      <section style={view !== "desktop" ? { display: "none" } : null}>
+        <NavLink to="/">SHOPIT</NavLink>
+      </section>
 
-      <div
-        className="middle"
-        style={hideSearchBar ? { display: "none" } : null}
+      <section style={view !== "desktop" ? { display: "none" } : null}>
+        <NavLink to="/explore" activeStyle={{ color: "coral" }}>
+          All Products
+        </NavLink>
+        <NavLink to="/cart" activeStyle={{ color: "coral" }}>
+          My Cart({`${cartLength}`})
+        </NavLink>
+      </section>
+
+      <section
+        className="mobile_menu"
+        style={view !== "desktop" ? { display: "none" } : null}
       >
-        <form>
-          <Search />
-          <input
-            type="text"
-            value={searchString}
-            onChange={(e) => setSearchString(e.target.value)}
-            placeholder="Search items"
-          />
-        </form>
-      </div>
+        <button onClick={() => setView("mobile")}>
+          <MenuIcon />
+        </button>
+      </section>
 
-      <div className="right">
-        <Link to="/cart">
-          <Badge badgeContent={cartLength} color="primary" max={99}>
-            <ShoppingCartIcon />
-          </Badge>
-        </Link>
-      </div>
+      <section
+        className="mobile_nav"
+        style={view === "desktop" ? { display: "none" } : null}
+      >
+        <div className="left">
+          <NavLink to="/explore" activeStyle={{ color: "coral" }}>
+            All Products
+          </NavLink>
+          <NavLink to="/cart" activeStyle={{ color: "coral" }}>
+            My Cart({`${cartLength}`})
+          </NavLink>
+        </div>
+
+        <div className="right">
+          <button onClick={() => setView("desktop")}>
+            <ClearIcon />
+          </button>
+        </div>
+      </section>
     </div>
   );
 };
@@ -61,10 +62,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapActionsToProps = (dispatch) => {
+const mapActionToProps = (dispatch) => {
   return {
     SET_CART: () => dispatch(Actions.SET_CART()),
   };
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(Navbar);
+export default connect(mapStateToProps, mapActionToProps)(Navbar);

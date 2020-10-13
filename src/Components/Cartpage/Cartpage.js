@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./Cart.css";
+import "./Cartpage.css";
 
 import { connect } from "react-redux";
-import * as Actions from "../../ActionCreators/actions";
+import * as Actions from "../../ActionCreators/Actions";
 import Navbar from "../Navbar/Navbar";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -17,15 +17,13 @@ const Cart = ({
   cartLoaded,
   INCREASE_QUANTITY,
 }) => {
+  const uid = localStorage.getItem("uid");
   const [totalPrice, setTotalprice] = useState(0);
   const [run, setRun] = useState(false);
   const [searchString, setSearchString] = useState("");
 
-  const filteredItems = cartItems.filter((item) => {
-    return item.itemName.toLowerCase().includes(searchString.toLowerCase());
-  });
-
   useEffect(() => {
+    SET_CART();
     if (cartItems.length > 0) {
       const totalPrice = cartItems.reduce((a, b) => {
         return a + b.itemPrice * b.itemQuantity;
@@ -51,10 +49,13 @@ const Cart = ({
       itemImage: image,
       itemQuantity: quantity,
     };
-    Axios.put(`https://ecom111.firebaseio.com/cartItems/${key}.json`, {
-      ...data,
-      itemQuantity: quantity + 1,
-    }).then((res) => {
+    Axios.put(
+      `https://cartapp-111.firebaseio.com/${uid}/cartItems/${key}.json`,
+      {
+        ...data,
+        itemQuantity: quantity + 1,
+      }
+    ).then((res) => {
       SET_CART();
     });
   };
@@ -67,30 +68,33 @@ const Cart = ({
       itemImage: image,
       itemQuantity: quantity,
     };
-    Axios.put(`https://ecom111.firebaseio.com/cartItems/${key}.json`, {
-      ...data,
-      itemQuantity: quantity - 1,
-    }).then((res) => {
+    Axios.put(
+      `https://cartapp-111.firebaseio.com/${uid}/cartItems/${key}.json`,
+      {
+        ...data,
+        itemQuantity: quantity - 1,
+      }
+    ).then((res) => {
       SET_CART();
     });
   };
 
   const RemoveFromCart = (key) => {
-    Axios.delete(`https://ecom111.firebaseio.com/cartItems/${key}.json`).then(
-      (res) => {
-        REMOVE_FROM_CART(key);
-        setRun(false);
-      }
-    );
+    Axios.delete(
+      `https://cartapp-111.firebaseio.com/${uid}/cartItems/${key}.json`
+    ).then((res) => {
+      REMOVE_FROM_CART(key);
+      setRun(false);
+    });
   };
 
   return (
     <div className="cart">
-      <Navbar searchString={searchString} setSearchString={setSearchString} />
+      <Navbar />
       <div className="cart_items">
         <h4>My Cart</h4>
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item) => {
+        {cartItems.length > 0 ? (
+          cartItems.map((item) => {
             return (
               <Transition key={item.itemId} in={run} timeout={500}>
                 {(state) => (

@@ -1,0 +1,33 @@
+.reviews_page {
+  width: 85%;
+  margin: auto;
+  margin-bottom: 150px;
+}
+
+.review_card {
+  width: 300px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  padding: 0 5px;
+  box-shadow: 3px 5px rgba(0, 0, 0, 0.07);
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.reviewer_profile {
+  display: flex;
+  align-items: center;
+}
+
+.reviewer_profile img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
