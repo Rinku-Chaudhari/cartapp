@@ -4,10 +4,12 @@ import "./Explore.css";
 import Navbar from "../Navbar/Navbar";
 import Item from "../Item/Item";
 import Axios from "axios";
+import Loader from "../Loader/Loader";
 
 const Explore = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const filteredItems = items.filter((item) => {
     return selectedCategory === "all"
@@ -16,11 +18,14 @@ const Explore = () => {
   });
 
   useEffect(() => {
-    Axios.get("https://cartapp-server.herokuapp.com/products/all").then(
-      (res) => {
+    Axios.get("https://cartapp-server.herokuapp.com/products/all")
+      .then((res) => {
         setItems(res.data);
-      }
-    );
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -59,7 +64,10 @@ const Explore = () => {
         </button>
       </section>
 
-      <section className="products">
+      <section
+        className="products"
+        style={loading ? { display: "none" } : null}
+      >
         {filteredItems.map((item) => {
           return (
             <div className="product" key={item.itemId}>
@@ -72,6 +80,10 @@ const Explore = () => {
             </div>
           );
         })}
+      </section>
+
+      <section className="loader" style={!loading ? { display: "none" } : null}>
+        <Loader />
       </section>
     </div>
   );

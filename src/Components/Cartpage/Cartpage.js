@@ -93,6 +93,13 @@ const Cart = ({
       <Navbar />
       <div className="cart_items">
         <h4>My Cart</h4>
+        <div
+          className="total_price"
+          style={cartItems.length < 1 ? { display: "none" } : null}
+        >
+          <p>Total Price</p>
+          <p>${totalPrice}</p>
+        </div>
         {cartItems.length > 0 ? (
           cartItems.map((item) => {
             return (
@@ -152,15 +159,8 @@ const Cart = ({
         ) : cartLoaded ? (
           <p>Nothing found</p>
         ) : (
-          <p>Loading...</p>
-        )}
-        <div
-          className="total_price"
-          style={cartItems.length < 1 ? { display: "none" } : null}
-        >
-          <p>Total Price</p>
-          <p>${totalPrice}</p>
-        </div>
+              <p>Loading...</p>
+            )}
       </div>
     </div>
   );
