@@ -70,12 +70,12 @@ const Explore = () => {
       >
         {filteredItems.map((item) => {
           return (
-            <div className="product" key={item.itemId}>
+            <div className="product" key={item.product_id}>
               <Item
-                itemId={item.itemId}
-                itemImage={item.itemImageURL}
-                itemPrice={item.itemPrice}
-                itemName={item.itemName}
+                itemId={item.product_id}
+                itemImage={item.product_image}
+                itemPrice={item.product_price}
+                itemName={item.product_name}
               />
             </div>
           );

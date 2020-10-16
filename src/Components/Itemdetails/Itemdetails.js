@@ -55,7 +55,7 @@ const Itemdetails = (props) => {
           itemDetails === undefined || loading ? { display: "none" } : null
         }
       >
-        <img src={itemDetails?.itemImageURL} alt="item_image" />
+        <img src={itemDetails?.product_image} alt="item_image" />
       </section>
 
       <section
@@ -64,10 +64,10 @@ const Itemdetails = (props) => {
           itemDetails === undefined || loading ? { display: "none" } : null
         }
       >
-        <p>{itemDetails?.itemName}</p>
+        <p>{itemDetails?.product_name}</p>
         <div className="price_quantity_div">
           <p style={{ fontSize: "18px", color: "blue" }}>
-            ${itemDetails?.itemPrice}
+            ${itemDetails?.product_price}
           </p>
           <select onChange={(e) => setItemQuantity(e.target.value)}>
             <option value={1}>1</option>
@@ -80,10 +80,10 @@ const Itemdetails = (props) => {
         <button
           onClick={() =>
             AddToCart(
-              itemDetails.itemId,
-              itemDetails.itemName,
-              itemDetails.itemImageURL,
-              itemDetails.itemPrice,
+              itemDetails.product_id,
+              itemDetails.product_name,
+              itemDetails.product_image,
+              itemDetails.product_price,
               itemQuantity,
               props.cartItems,
               props.ADD_TO_CART,
@@ -96,7 +96,7 @@ const Itemdetails = (props) => {
         </button>
 
         <div className="item_specs">
-          {itemDetails?.itemSpecs?.map((spec) => {
+          {itemDetails?.product_specs?.map((spec) => {
             return <li key={new Date() * Math.random()}>{spec}</li>;
           })}
         </div>
