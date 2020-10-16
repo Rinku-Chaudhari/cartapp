@@ -1,9 +1,10 @@
 import React from "react";
+import { withRouter } from "react-router";
 import "./Header.css";
 
 import Illustration from "./illus.svg";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div className="header">
       <section className="title">
@@ -12,7 +13,9 @@ const Header = () => {
           <br />
           From groceries to tech.
         </p>
-        <button>EXPLORE NOW</button>
+        <button onClick={() => props.history.push(`/explore`)}>
+          EXPLORE NOW
+        </button>
       </section>
       <section className="illustration">
         <img src={Illustration} alt="illus" />
@@ -21,4 +24,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);
