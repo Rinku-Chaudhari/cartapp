@@ -14,7 +14,7 @@ const Explore = () => {
   const filteredItems = items.filter((item) => {
     return selectedCategory === "all"
       ? item
-      : item.itemCategory === selectedCategory;
+      : item.product_category === selectedCategory;
   });
 
   useEffect(() => {

@@ -24,7 +24,7 @@ const Justadded = () => {
         <Item
           itemId={6}
           itemPrice={540}
-          itemImage="https://bit.ly/33LfoZi"
+          itemImage="https://bit.ly/2H6mqiv"
           itemName="Google Pixel 3"
         />
         <Item
